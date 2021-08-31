@@ -1,7 +1,6 @@
 import re
 import requests
 from bs4 import BeautifulSoup
-from collections import OrderedDict
 
 # 获取豆瓣话题评论中的邮箱（视频，提取函数之后）
 headers = {
@@ -14,11 +13,9 @@ def download_page(url):
 
     url_set = set()
     paginator_eles = soup.find('div', attrs={'class': 'paginator'})
-
     if paginator_eles:
         for a_ele in paginator_eles.find_all('a'):
             url_set.add(a_ele.attrs.get('href'))
-
         page_obj_list = [soup]
         for url in url_set:
             print(f'下载分页{url}')
@@ -38,7 +35,9 @@ def fetch_emails(page_obj_list):
             # print(mail)
             if mail:
                 pub_time = ele.find('span', attrs={'class': 'pubtime'})
-                print(mail.group(), '\t\t\t', pub_time.text)
+                # print(mail.group(), '\t\t\t', pub_time.text)
+                mail_list.append([mail.group(), pub_time.text])
+    print(mail_list)
 
 
 all_page_list = download_page('https://www.douban.com/group/topic/198233257/')

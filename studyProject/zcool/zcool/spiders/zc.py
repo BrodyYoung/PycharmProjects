@@ -15,21 +15,16 @@ class ZcSpider(scrapy.Spider):
         for div in divList:
             imgLink = div.xpath("./div[1]/a/img/@src").extract()[0]  # 1.封面图片链接
             # print(imgLink)
-
             title = div.xpath("./div[2]/p[1]/a/@title").extract_first()
             # print(title)
-
             types = div.xpath("./div[2]/p[2]/@title").extract()[0]
             # print(types)
-
             vistor = div.xpath("./div[2]/p[3]/span[1]/@title").extract_first()
             # print(vistor)
-
             comment = div.xpath("./div[2]/p[3]/span[2]/@title").extract()[0]
             # print(comment)
-
             likes = div.xpath("./div[2]/p[3]/span[3]/@title").extract_first()  # 6likes（推荐人数）
-
+            # print(likes)
             item = ZcoolItem(imgLink=imgLink, title=title, types=types, vistor=vistor, comment=comment, likes=likes)
             yield item
             # print(item)
